@@ -74,7 +74,7 @@ final class SWMacroTests: XCTestCase {
         )
     }
 
-    func testdd() {
+    func testPublicMemberwiseInit() {
         assertMacroExpansion(
             """
             @publicMemberwiseInit
@@ -97,4 +97,5 @@ final class SWMacroTests: XCTestCase {
             macros: ["publicMemberwiseInit": PublicMemberwiseInitMacro.self]
         )
     }
+
 }

@@ -25,4 +25,3 @@ public macro SingleTon() = #externalMacro(module: "SWMacroMacros", type: "Single
 @attached(member, names: named(init))
 public macro publicMemberwiseInit() = #externalMacro(module: "SWMacroMacros", type: "PublicMemberwiseInitMacro")
 
-
