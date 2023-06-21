@@ -73,4 +73,28 @@ final class SWMacroTests: XCTestCase {
             macros: ["SingleTon": SingleTonMacro.self]
         )
     }
+
+    func testdd() {
+        assertMacroExpansion(
+            """
+            @publicMemberwiseInit
+            class MemberWiseInit {
+                let intType: Int
+                var stringType: Bool
+            }
+            """,
+            expandedSource: """
+            
+            class MemberWiseInit {
+                let intType: Int
+                var stringType: Bool
+                public init(intType: Int, stringType: Bool) {
+                    self.intType = intType
+                    self.stringType = stringType
+                }
+            }
+            """,
+            macros: ["publicMemberwiseInit": PublicMemberwiseInitMacro.self]
+        )
+    }
 }

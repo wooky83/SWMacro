@@ -22,3 +22,22 @@ class MySingleTone {
 
 let xx: Int? = 6
 let x = #unwrap(xx, message: "fail")
+
+@OptionSet<UInt>
+struct ShippingOptions {
+    private enum Options: Int {
+        case nextDay
+        case secondDay
+        case priority
+        case standard
+    }
+}
+
+#warning("Warning👆")
+let warning = 10
+
+@publicMemberwiseInit
+class MemberWiseInit {
+    let intType: Int
+    var stringType: Bool
+}

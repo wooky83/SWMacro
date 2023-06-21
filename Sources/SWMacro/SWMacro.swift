@@ -21,3 +21,8 @@ public macro unwrap<Wrapped>(_ expr: Wrapped?, message: String) -> Wrapped = #ex
 
 @attached(member, names: named(init), named(shared))
 public macro SingleTon() = #externalMacro(module: "SWMacroMacros", type: "SingleTonMacro")
+
+@attached(member, names: named(init))
+public macro publicMemberwiseInit() = #externalMacro(module: "SWMacroMacros", type: "PublicMemberwiseInitMacro")
+
+
