@@ -20,7 +20,7 @@ final class SWMacroTests: XCTestCase {
         )
     }
 
-    func testMacroWithStringLiteral() {
+    func testStringLiteralMacro() {
         assertMacroExpansion(
             #"""
             #stringify("Hello, \(name)")
@@ -74,7 +74,7 @@ final class SWMacroTests: XCTestCase {
         )
     }
 
-    func testPublicMemberwiseInit() {
+    func testPublicMemberwiseInitMacro() {
         assertMacroExpansion(
             """
             @publicMemberwiseInit
@@ -98,7 +98,7 @@ final class SWMacroTests: XCTestCase {
         )
     }
 
-    func testURL() {
+    func testURLMacro() {
         assertMacroExpansion(
             #"""
             #URL("http://www.naver.com")
