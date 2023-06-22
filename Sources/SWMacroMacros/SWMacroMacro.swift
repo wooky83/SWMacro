@@ -7,7 +7,6 @@ import SwiftSyntaxMacros
 struct SWMacroPlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
         StringifyMacro.self,
-        DirectMacro.self,
         UnwrapMacro.self,
         SingleTonMacro.self,
         PublicMemberwiseInitMacro.self,

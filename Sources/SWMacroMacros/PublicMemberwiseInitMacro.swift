@@ -18,14 +18,7 @@ public struct PublicMemberwiseInitMacro: MemberMacro {
             }
         }()
 
-        let initArguments = storedProperties.compactMap { property -> (name: String, type: String)? in
-            guard let patternBinding = property.bindings.first?.as(PatternBindingSyntax.self) else { return nil }
-            guard let name = patternBinding.pattern.as(IdentifierPatternSyntax.self)?.identifier,
-                  let type = patternBinding.typeAnnotation?.as(TypeAnnotationSyntax.self)?.type.as(SimpleTypeIdentifierSyntax.self)?.name else {
-                return nil
-            }
-            return (name: name.text, type: type.text)
-        }
+        let initArguments = storedProperties.compactMap(\.getNameAndType)
 
         let initBody: ExprSyntax = "\(raw: initArguments.map { "self.\($0.name) = \($0.name)" }.joined(separator: "\n"))"
 

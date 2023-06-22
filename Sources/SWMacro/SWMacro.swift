@@ -10,9 +10,6 @@
 @freestanding(expression)
 public macro stringify<T>(_ value: T) -> (T, String) = #externalMacro(module: "SWMacroMacros", type: "StringifyMacro")
 
-@freestanding(expression)
-public macro direct<T>(_ value: T) -> T = #externalMacro(module: "SWMacroMacros", type: "DirectMacro")
-
 // The #unwrap expression macro
 /// Force-unwraps the optional value passed to `expr`.
 /// - Parameter message: Failure message, followed by `expr` in single quotes

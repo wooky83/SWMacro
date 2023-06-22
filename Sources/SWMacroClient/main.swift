@@ -8,9 +8,6 @@ let optionalValue: Int? = 5
 let (result, code) = #stringify(a + b)
 print("The value \(result) was produced by the code \"\(code)\"")
 
-let directValue = #direct(optionalValue)
-print("DirectValue : \(String(describing: directValue))")
-
 let unwrapValue = #unwrap(optionalValue, message: "Fail")
 print("wrapped : \(unwrapValue)")
 
@@ -20,8 +17,8 @@ class MySingleTone {
     var variable2: Int?
 }
 
-let xx: Int? = 6
-let x = #unwrap(xx, message: "fail")
+let number: Int? = 6
+let unWrap = #unwrap(number, message: "fail")
 
 @OptionSet<UInt>
 struct ShippingOptions {
@@ -41,3 +38,5 @@ class MemberWiseInit {
     let intType: Int
     var stringType: Bool
 }
+
+

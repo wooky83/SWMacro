@@ -43,6 +43,15 @@ extension VariableDeclSyntax {
     var isConstant: Bool {
         bindingKeyword.tokenKind == .keyword(Keyword.let) && bindings.first?.initializer != nil
     }
+
+    var getNameAndType: (name: String, type: String)? {
+        guard let patternBinding = bindings.first?.as(PatternBindingSyntax.self) else { return nil }
+        guard let name = patternBinding.pattern.as(IdentifierPatternSyntax.self)?.identifier,
+              let type = patternBinding.typeAnnotation?.as(TypeAnnotationSyntax.self)?.type.as(SimpleTypeIdentifierSyntax.self)?.name else {
+            return nil
+        }
+        return (name: name.text, type: type.text)
+    }
 }
 
 
