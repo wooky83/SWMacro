@@ -10,5 +10,6 @@ struct SWMacroPlugin: CompilerPlugin {
         UnwrapMacro.self,
         SingleTonMacro.self,
         PublicMemberwiseInitMacro.self,
+        URLMacro.self,
     ]
 }

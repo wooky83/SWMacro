@@ -98,4 +98,16 @@ final class SWMacroTests: XCTestCase {
         )
     }
 
+    func testURL() {
+        assertMacroExpansion(
+            #"""
+            #URL("http://www.naver.com")
+            """#,
+            expandedSource: #"""
+            URL(string: "http://www.naver.com")!
+            """#,
+            macros: ["URL": URLMacro.self]
+        )
+    }
+
 }

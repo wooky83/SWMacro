@@ -6,9 +6,15 @@ import SwiftSyntaxMacros
 
 internal enum MacroError: Swift.Error, CustomStringConvertible {
     case invalidInputType
+    case message(String)
 
     var description: String {
-        "@PublicMemberwiseInitMacro is only applicable to structs or classes"
+      switch self {
+      case .invalidInputType:
+          return "@PublicMemberwiseInitMacro is only applicable to structs or classes"
+      case .message(let text):
+        return text
+      }
     }
 }
 

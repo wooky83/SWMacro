@@ -1,3 +1,4 @@
+import Foundation
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
@@ -22,3 +23,5 @@ public macro SingleTon() = #externalMacro(module: "SWMacroMacros", type: "Single
 @attached(member, names: named(init))
 public macro publicMemberwiseInit() = #externalMacro(module: "SWMacroMacros", type: "PublicMemberwiseInitMacro")
 
+@freestanding(expression)
+public macro URL(_ stringLiteral: String) -> URL = #externalMacro(module: "SWMacroMacros", type: "URLMacro")

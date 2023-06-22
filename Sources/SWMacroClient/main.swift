@@ -1,4 +1,5 @@
 import SWMacro
+import Foundation
 
 let a = 17
 let b = 25
@@ -39,4 +40,5 @@ class MemberWiseInit {
     var stringType: Bool
 }
 
+let url1 = #URL("http://www.naver.com")
 
