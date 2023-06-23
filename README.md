@@ -35,12 +35,13 @@ The proposals above are mostly implemented as of the April 11, 2023 [Swift toolc
 ---
 
 ## Usage :computer:
-* unwrap 
+### unwrap 
+* macro
 ```swift
 let optionalValue: Int? = 5
 let unwrapValue = #unwrap(optionalValue, message: "❌")
 ```
-expand Macro
+* expand Macro
 ```swift
 let optionalValue: Int? = 5
 let unwrapValue = #unwrap(optionalValue, message: "❌")
@@ -51,7 +52,8 @@ let unwrapValue = #unwrap(optionalValue, message: "❌")
     return wrappValue
 }()
 ```
-* SingleTon
+### SingleTon
+* macro
 ```swift
 @SingleTon
 class MySingleTone {
@@ -59,7 +61,7 @@ class MySingleTone {
     var variable2: Int?
 }
 ```
-expand Macro
+* expand Macro
 ```swift
 @SingleTon
 class MySingleTone {
@@ -70,7 +72,8 @@ class MySingleTone {
 }
 ```
 
-* publicMemberwiseInit
+### publicMemberwiseInit
+* macro
 ```swift
 @publicMemberwiseInit
 class MemberWiseInit {
@@ -78,7 +81,7 @@ class MemberWiseInit {
     var stringType: Bool
 }
 ```
-expand Macro
+* expand Macro
 ```swift
 @publicMemberwiseInit
 class MemberWiseInit {
@@ -91,17 +94,19 @@ class MemberWiseInit {
 }
 ```
 
-* URL
+### URL
+* macro
 ```swift
 let url = #URL("http://www.naver.com")
 ```
-expand Macro
+* expand Macro
 ```swift
 let url = #URL("http://www.naver.com")
 URL(string: "http://www.naver.com")!
 ```
 
-* AssociatedObject
+### AssociatedObject
+* macro
 ```swift
 class AssociatedClass { }
 extension AssociatedClass {
@@ -109,7 +114,7 @@ extension AssociatedClass {
     var intValue: Int
 }
 ```
-expand Macro
+* expand Macro
 ```swift
 class AssociatedClass {
 }
@@ -145,6 +150,6 @@ extension AssociatedClass {
 ```
 
 ## OS Macro
-* @OptionSet<UInt>
-* #warning("Warning👆")
-* #error("Error")
+### @OptionSet<UInt>
+### #warning("Warning👆")
+### #error("Error")
