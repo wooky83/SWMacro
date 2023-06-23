@@ -11,5 +11,6 @@ struct SWMacroPlugin: CompilerPlugin {
         SingleTonMacro.self,
         PublicMemberwiseInitMacro.self,
         URLMacro.self,
+        AssociatedObjectMacro.self,
     ]
 }

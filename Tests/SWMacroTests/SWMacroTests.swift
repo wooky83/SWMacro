@@ -84,7 +84,7 @@ final class SWMacroTests: XCTestCase {
             }
             """#,
             expandedSource: #"""
-            
+
             public struct MySingleTone {
                 var variable1: Int?
                 var variable2: Int?
@@ -132,5 +132,53 @@ final class SWMacroTests: XCTestCase {
             macros: ["URL": URLMacro.self]
         )
     }
+
+    func testAssociatedObjectMacro() {
+        assertMacroExpansion(
+            #"""
+            class AssociatedClass { }
+            extension AssociatedClass {
+                @AssociatedObject(.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                var intValue: Int
+            }
+            """#,
+            expandedSource: #"""
+            class AssociatedClass {
+            }
+            extension AssociatedClass {
+                var intValue: Int {
+                    get {
+                      if let associatedObject = objc_getAssociatedObject(
+                          self,
+                          &Self.__associated_intValueKey
+                      ) as? Int {
+                          return associatedObject
+                      }
+                      let variable = Int()
+                      objc_setAssociatedObject(
+                          self,
+                          &Self.__associated_intValueKey,
+                          variable,
+                          .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+                      )
+                      return variable
+                    }
+                    set {
+                      objc_setAssociatedObject(
+                          self,
+                          &Self.__associated_intValueKey,
+                          newValue,
+                          .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+                      )
+                    }
+                }
+                fileprivate static var __associated_intValueKey: UInt8 = 0
+            }
+            """#,
+            macros: ["AssociatedObject": AssociatedObjectMacro.self]
+        )
+    }
+
+
 
 }

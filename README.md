@@ -1,4 +1,19 @@
-# Swift Macros Dashboard
+# Swift Macros :rocket:
+
+## Learning Resources :books:
+
+### **Tools**
+- [Swift AST Explorer](https://swift-ast-explorer.com/)
+  - This is extremely helpful when working with [SwiftSyntax](https://github.com/apple/swift-syntax), I used this when writing [Sourcery](https://github.com/krzysztofzablocki/Sourcery) parser and you can leverage it to build your own Macros. 
+
+### **Apple:**
+
+Dive into Swift Macros with these WWDC sessions:
+
+- [Write Swift Macros](https://developer.apple.com/videos/play/wwdc2023-10166): An introductory session on Macros, their roles, and workings with a basic example.
+- [Expand Swift Macros](https://developer.apple.com/videos/play/wwdc2023-10167): A deeper exploration into crafting your Macros and testing their functionality.
+
+### Swift Macros Dashboard
 
 Macros are a power feature in a number of programming languages that make the language more extensible. Swift has always sought to enable expressive libraries through its use of type inference, generics, and general approach toward clarity of use. Macros in Swift are intended to improve expressiveness without sacrificing clarity.
 
@@ -16,3 +31,120 @@ Proposal documents:
 * [Freestanding macros](https://github.com/DougGregor/swift-evolution/blob/freestanding-macros/proposals/nnnn-freestanding-macros.md): extends the syntax introduced by expression macros to enable macros that create statements and declarations. 
 
 The proposals above are mostly implemented as of the April 11, 2023 [Swift toolchain snapshots](https://www.swift.org/download/#snapshots).
+
+---
+
+## Usage :computer:
+* unwrap 
+```swift
+let optionalValue: Int? = 5
+let unwrapValue = #unwrap(optionalValue, message: "❌")
+```
+expand Macro
+```swift
+let optionalValue: Int? = 5
+let unwrapValue = #unwrap(optionalValue, message: "❌")
+{ [wrappValue = optionalValue] in
+    guard let wrappValue else {
+        preconditionFailure("❌")
+    }
+    return wrappValue
+}()
+```
+* SingleTon
+```swift
+@SingleTon
+class MySingleTone {
+    var variable1: Int?
+    var variable2: Int?
+}
+```
+expand Macro
+```swift
+@SingleTon
+class MySingleTone {
+    var variable1: Int?
+    var variable2: Int?
+    private init() {}
+    static let shared = MySingleTone()
+}
+```
+
+* publicMemberwiseInit
+```swift
+@publicMemberwiseInit
+class MemberWiseInit {
+    let intType: Int
+    var stringType: Bool
+}
+```
+expand Macro
+```swift
+@publicMemberwiseInit
+class MemberWiseInit {
+    let intType: Int
+    var stringType: Bool
+    public init(intType: Int, stringType: Bool) {
+        self.intType = intType
+        self.stringType = stringType
+    }
+}
+```
+
+* URL
+```swift
+let url = #URL("http://www.naver.com")
+```
+expand Macro
+```swift
+let url = #URL("http://www.naver.com")
+URL(string: "http://www.naver.com")!
+```
+
+* AssociatedObject
+```swift
+class AssociatedClass { }
+extension AssociatedClass {
+    @AssociatedObject(.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    var intValue: Int
+}
+```
+expand Macro
+```swift
+class AssociatedClass {
+}
+extension AssociatedClass {
+    var intValue: Int {
+        get {
+            if let associatedObject = objc_getAssociatedObject(
+                self,
+                &Self.__associated_intValueKey
+            ) as? Int {
+                return associatedObject
+            }
+            let variable = Int()
+            objc_setAssociatedObject(
+                self,
+                &Self.__associated_intValueKey,
+                variable,
+                .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+            )
+            return variable
+        }
+        set {
+            objc_setAssociatedObject(
+                self,
+                &Self.__associated_intValueKey,
+                newValue,
+                .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+            )
+        }
+    }
+    fileprivate static var __associated_intValueKey: UInt8 = 0
+}
+```
+
+## OS Macro
+* @OptionSet<UInt>
+* #warning("Warning👆")
+* #error("Error")

@@ -25,3 +25,7 @@ public macro publicMemberwiseInit() = #externalMacro(module: "SWMacroMacros", ty
 
 @freestanding(expression)
 public macro URL(_ stringLiteral: String) -> URL = #externalMacro(module: "SWMacroMacros", type: "URLMacro")
+
+@attached(peer, names: arbitrary)
+@attached(accessor)
+public macro AssociatedObject(_ policy: objc_AssociationPolicy) = #externalMacro(module: "SWMacroMacros", type: "AssociatedObjectMacro")

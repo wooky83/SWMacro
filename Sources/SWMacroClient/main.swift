@@ -4,12 +4,14 @@ import Foundation
 let a = 17
 let b = 25
 
-let optionalValue: Int? = 5
+
 
 let (result, code) = #stringify(a + b)
 print("The value \(result) was produced by the code \"\(code)\"")
 
-let unwrapValue = #unwrap(optionalValue, message: "Fail")
+let optionalValue: Int? = 5
+let unwrapValue = #unwrap(optionalValue, message: "❌")
+
 print("wrapped : \(unwrapValue)")
 
 @SingleTon
@@ -40,5 +42,18 @@ class MemberWiseInit {
     var stringType: Bool
 }
 
-let url1 = #URL("http://www.naver.com")
+let url = #URL("http://www.naver.com")
 
+class AssociatedClass { }
+
+extension AssociatedClass {
+    @AssociatedObject(.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    var intValue: Int
+
+    @AssociatedObject(.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    var arrayValue: Array<Int>
+}
+
+let asClass = AssociatedClass()
+asClass.intValue = 83
+print("AssociatedClass", asClass.intValue)
