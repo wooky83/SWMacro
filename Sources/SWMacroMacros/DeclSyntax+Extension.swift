@@ -11,7 +11,7 @@ internal enum MacroError: Swift.Error, CustomStringConvertible {
     var description: String {
       switch self {
       case .invalidInputType:
-          return "@PublicMemberwiseInitMacro is only applicable to structs or classes"
+          return "only applicable to structs or classes"
       case .message(let text):
         return text
       }

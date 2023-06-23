@@ -67,9 +67,32 @@ final class SWMacroTests: XCTestCase {
                 var variable2: Int?
                 private init() {
                 }
-                static let shared = MySingleTone ()
+                static let shared = MySingleTone()
             }
             """,
+            macros: ["SingleTon": SingleTonMacro.self]
+        )
+    }
+
+    func testPublicSingleTonMacro() {
+        assertMacroExpansion(
+            #"""
+            @SingleTon
+            public struct MySingleTone {
+                var variable1: Int?
+                var variable2: Int?
+            }
+            """#,
+            expandedSource: #"""
+            
+            public struct MySingleTone {
+                var variable1: Int?
+                var variable2: Int?
+                private init() {
+                }
+                public static let shared = MySingleTone()
+            }
+            """#,
             macros: ["SingleTon": SingleTonMacro.self]
         )
     }
