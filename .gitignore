@@ -80,3 +80,6 @@ Derived/
 # Tuist managed dependencies ###
 Tuist/Dependencies
 /.idea
+
+#github
+.github/workflow

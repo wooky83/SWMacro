@@ -17,15 +17,30 @@ public macro stringify<T>(_ value: T) -> (T, String) = #externalMacro(module: "S
 @freestanding(expression)
 public macro unwrap<Wrapped>(_ expr: Wrapped?, message: String) -> Wrapped = #externalMacro(module: "SWMacroMacros", type: "UnwrapMacro")
 
+/// SingleTone init
 @attached(member, names: named(init), named(shared))
 public macro SingleTon() = #externalMacro(module: "SWMacroMacros", type: "SingleTonMacro")
 
+
+/// Struct or Class automate Init
 @attached(member, names: named(init))
 public macro publicMemberwiseInit() = #externalMacro(module: "SWMacroMacros", type: "PublicMemberwiseInitMacro")
 
+
+/// URL init
 @freestanding(expression)
 public macro URL(_ stringLiteral: String) -> URL = #externalMacro(module: "SWMacroMacros", type: "URLMacro")
 
+
+// Creating a store property in an extension
 @attached(peer, names: arbitrary)
 @attached(accessor)
 public macro AssociatedObject(_ policy: objc_AssociationPolicy) = #externalMacro(module: "SWMacroMacros", type: "AssociatedObjectMacro")
+
+
+/// Wrap up the stored properties of the given type in a dictionary,
+/// turning them into computed properties
+@attached(accessor)
+@attached(member, names: named(_storage))
+@attached(memberAttribute)
+public macro DictionaryStorage() = #externalMacro(module: "SWMacroMacros", type: "DictionaryStorageMacro")

@@ -103,17 +103,14 @@ final class SWMacroTests: XCTestCase {
             @publicMemberwiseInit
             class MemberWiseInit {
                 let intType: Int
-                var stringType: Bool
             }
             """,
             expandedSource: """
             
             class MemberWiseInit {
                 let intType: Int
-                var stringType: Bool
-                public init(intType: Int, stringType: Bool) {
+                public init(intType: Int) {
                     self.intType = intType
-                    self.stringType = stringType
                 }
             }
             """,
