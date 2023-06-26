@@ -19,7 +19,6 @@ public struct StringifyMacro: ExpressionMacro {
         guard let argument = node.argumentList.first?.expression else {
             fatalError("compiler bug: the macro does not have any arguments")
         }
-
         return "(\(argument), \(literal: argument.description))"
     }
 }
