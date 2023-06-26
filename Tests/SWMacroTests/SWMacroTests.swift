@@ -176,6 +176,57 @@ final class SWMacroTests: XCTestCase {
         )
     }
 
+    func testDictionaryStorageMacro() {
+        assertMacroExpansion(
+            #"""
+            @DictionaryStorage
+            struct MyPoint {
+                var a: Int? = nil
+                var x: Int = 1
+                var y: String = "2"
+                var z: Bool = true
+            }
+            """#,
+            expandedSource: #"""
 
+            struct MyPoint {
+                var a: Int? = nil {
+                    get {
+                        _storage["a"] as! Int?
+                    }
+                    set {
+                        _storage["a"] = newValue
+                    }
+                }
+                var x: Int = 1 {
+                    get {
+                        _storage["x", default: 1] as! Int
+                    }
+                    set {
+                        _storage["x"] = newValue
+                    }
+                }
+                var y: String = "2" {
+                    get {
+                        _storage["y", default: "2"] as! String
+                    }
+                    set {
+                        _storage["y"] = newValue
+                    }
+                }
+                var z: Bool = true {
+                    get {
+                        _storage["z", default: true] as! Bool
+                    }
+                    set {
+                        _storage["z"] = newValue
+                    }
+                }
+              var _storage: [String: Any] = ["x": 1, "y": "2", "z": true]
+            }
+            """#,
+            macros: ["DictionaryStorage": DictionaryStorageMacro.self]
+        )
+    }
 
 }

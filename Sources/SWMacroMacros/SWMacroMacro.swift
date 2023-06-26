@@ -12,5 +12,6 @@ struct SWMacroPlugin: CompilerPlugin {
         PublicMemberwiseInitMacro.self,
         URLMacro.self,
         AssociatedObjectMacro.self,
+        DictionaryStorageMacro.self,
     ]
 }

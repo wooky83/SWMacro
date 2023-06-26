@@ -57,3 +57,15 @@ extension AssociatedClass {
 let asClass = AssociatedClass()
 asClass.intValue = 83
 print("AssociatedClass", asClass.intValue)
+
+@DictionaryStorage
+struct MyPoint {
+    var x: Int? = nil
+    var y: Int = 2
+}
+
+var dictionaryStorage = MyPoint()
+print(dictionaryStorage._storage)
+dictionaryStorage.x = 5
+print(dictionaryStorage._storage)
+
