@@ -137,6 +137,8 @@ final class SWMacroTests: XCTestCase {
             extension AssociatedClass {
                 @AssociatedObject(.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
                 var intValue: Int
+                @AssociatedObject(.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                var StringValue: String = "Hello World!!"
             }
             """#,
             expandedSource: #"""
@@ -170,6 +172,33 @@ final class SWMacroTests: XCTestCase {
                     }
                 }
                 fileprivate static var __associated_intValueKey: UInt8 = 0
+                var StringValue: String = "Hello World!!" {
+                    get {
+                      if let associatedObject = objc_getAssociatedObject(
+                          self,
+                          &Self.__associated_StringValueKey
+                      ) as? String  {
+                          return associatedObject
+                      }
+                      let variable = "Hello World!!"
+                      objc_setAssociatedObject(
+                          self,
+                          &Self.__associated_StringValueKey,
+                          variable,
+                          .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+                      )
+                      return variable
+                    }
+                    set {
+                      objc_setAssociatedObject(
+                          self,
+                          &Self.__associated_StringValueKey,
+                          newValue,
+                          .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+                      )
+                    }
+                }
+                fileprivate static var __associated_StringValueKey: UInt8 = 0
             }
             """#,
             macros: ["AssociatedObject": AssociatedObjectMacro.self]
@@ -229,4 +258,29 @@ final class SWMacroTests: XCTestCase {
         )
     }
 
+    func testCodingKeysMacro() {
+        assertMacroExpansion(
+            #"""
+            @CodingKeys
+            struct Coding {
+                let id: String
+                @CodingKeys(key: "birth_day")
+                let birthDay: Int
+            }
+            """#,
+            expandedSource: #"""
+            struct Coding {
+                let id: String
+                let birthDay: Int
+                enum CodingKeys: String, CodingKey {
+                  case id
+                  case birthDay = "birth_day"
+                }
+            }
+            extension Coding: Codable {
+            }
+            """#,
+            macros: ["CodingKeys": CodingKeysMacro.self]
+        )
+    }
 }

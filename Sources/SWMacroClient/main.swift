@@ -69,3 +69,25 @@ print(dictionaryStorage._storage)
 dictionaryStorage.x = 5
 print(dictionaryStorage._storage)
 
+
+@CodingKeys
+struct MyPerson {
+    let id: String
+    @CodingKeys(key: "_age")
+    let age: Int
+}
+
+let jsonString =
+"""
+{
+    "id" : "wow",
+    "_age" : 25
+}
+"""
+
+let decoder = JSONDecoder()
+var data = jsonString.data(using: .utf8)
+if let data = data, let myPerson = try? decoder.decode(MyPerson.self, from: data) {
+    print(myPerson.id)
+    print(myPerson.age)
+}

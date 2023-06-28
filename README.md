@@ -199,7 +199,38 @@ struct MyPoint {
 }
 ```
 
+### CodingKeys
+* macro
+```swift
+@CodingKeys
+struct MyPerson {
+    let id: String
+    @CodingKeys(key: "_age")
+    let age: Int
+}
+```
+* expand Macro
+```swift
+struct MyPerson {
+    let id: String
+    let age: Int
+    enum CodingKeys: String, CodingKey {
+        case id
+        case age = "_age"
+    }
+}
+extension MyPerson : Codable {
+
+}
+```
+
 ## OS Macro
-### @OptionSet<UInt>
-### #warning("Warning👆")
-### #error("Error")
+```swift 
+@OptionSet<UInt>
+```
+```swift
+#warning("Warning👆")
+```
+```swift 
+#error("Error")
+```

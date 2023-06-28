@@ -44,3 +44,8 @@ public macro AssociatedObject(_ policy: objc_AssociationPolicy) = #externalMacro
 @attached(member, names: named(_storage))
 @attached(memberAttribute)
 public macro DictionaryStorage() = #externalMacro(module: "SWMacroMacros", type: "DictionaryStorageMacro")
+
+/// CodingKeys
+@attached(member, names: named(CodingKeys))
+@attached(conformance)
+public macro CodingKeys(key: String? = nil) = #externalMacro(module: "SWMacroMacros", type: "CodingKeysMacro")

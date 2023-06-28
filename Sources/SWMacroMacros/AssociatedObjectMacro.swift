@@ -53,6 +53,8 @@ extension AssociatedObjectMacro: AccessorMacro {
               let policy = firstElement.as(MemberAccessExprSyntax.self) else {
             throw MacroError.message("`must be objc_AssociationPolicy specified.")
         }
+        
+        let defaultValue = binding.initializer?.value ?? "\(type)()"
 
         let getAccessor: AccessorDeclSyntax =
           """
@@ -63,7 +65,7 @@ extension AssociatedObjectMacro: AccessorMacro {
             ) as? \(type) {
                 return associatedObject
             }
-            let variable = \(type)()
+            let variable = \(raw: defaultValue)
             objc_setAssociatedObject(
                 self,
                 &Self.__associated_\(identifier)Key,

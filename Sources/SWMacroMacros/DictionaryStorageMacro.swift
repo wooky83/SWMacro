@@ -53,17 +53,15 @@ extension DictionaryStorageMacro: MemberMacro {
         guard let structDeclaration = declaration.as(StructDeclSyntax.self) else { return [] }
         let values = structDeclaration.storedProperties()
         
-        let resultValues = values.compactMap { value -> ExprSyntax? in
+        let resultValues = values.compactMap { value -> String? in
             guard let patternBinding = value.bindings.first?.as(PatternBindingSyntax.self) else { return nil }
             guard let name = patternBinding.pattern.as(IdentifierPatternSyntax.self)?.identifier,
                   let _ = patternBinding.typeAnnotation?.as(TypeAnnotationSyntax.self)?.type.as(SimpleTypeIdentifierSyntax.self),
                     let value = patternBinding.initializer?.as(InitializerClauseSyntax.self)?.value else { return nil }
             return """
-                    "\(raw: name)": \(raw: value)
+                    "\(name)": \(value)
                     """
-        }.reduce(into: "") { result, eSyntax in
-            result.append(",\(eSyntax)")
-        }.dropFirst()
+        }.joined(separator: ",")
 
         let storage: DeclSyntax = "var _storage: [String: Any] = [\(raw: resultValues)]"
         return [storage.with(\.leadingTrivia, [.newlines(1), .spaces(2)])]
