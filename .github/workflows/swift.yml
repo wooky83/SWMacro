@@ -21,9 +21,9 @@ jobs:
           xcode-version: '15.0-beta'
 
       - name: Build SPM project
-        run: xcodebuild -scheme SWMacro-Package -destination 'platform=macOS'
+        run: swift build
       - name: Run Tests
-        run: xcodebuild test -scheme SWMacro-Package -destination 'platform=macOS'
+        run: swift test
 
       - name: Print Message
         run: echo "Wow GitHub Action!"
