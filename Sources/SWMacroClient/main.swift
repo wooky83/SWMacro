@@ -75,13 +75,20 @@ struct MyPerson {
     let id: String
     @CodingKeys(key: "_age")
     let age: Int
+    let use: MyUse
+    @CodingKeys
+    struct MyUse {
+        @CodingKeys(key: "_favorite")
+        let favorite: String
+    }
 }
 
 let jsonString =
 """
 {
     "id" : "wow",
-    "_age" : 25
+    "_age" : 25,
+    "use" : { "_favorite": "movie" }
 }
 """
 
@@ -90,4 +97,5 @@ var data = jsonString.data(using: .utf8)
 if let data = data, let myPerson = try? decoder.decode(MyPerson.self, from: data) {
     print(myPerson.id)
     print(myPerson.age)
+    print(myPerson.use.favorite)
 }
