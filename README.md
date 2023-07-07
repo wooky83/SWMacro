@@ -1,3 +1,4 @@
+[![SWMacro SPM Build and Test](https://github.com/wooky83/SWMacro/actions/workflows/swift.yml/badge.svg)](https://github.com/wooky83/SWMacro/actions/workflows/swift.yml)
 # Swift Macros :rocket:
 
 ## Learning Resources :books:
