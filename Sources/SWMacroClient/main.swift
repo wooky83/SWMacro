@@ -23,15 +23,16 @@ class MySingleTone {
 let number: Int? = 6
 let unWrap = #unwrap(number, message: "fail")
 
-@OptionSet<UInt>
-struct ShippingOptions {
-    private enum Options: Int {
-        case nextDay
-        case secondDay
-        case priority
-        case standard
-    }
-}
+
+//@OptionSet<UInt8>
+//struct ShippingOptions {
+//  private enum Options: Int {
+//    case nextDay
+//    case secondDay
+//    case priority
+//    case standard
+//  }
+//}
 
 #warning("Warning👆")
 let warning = 10
