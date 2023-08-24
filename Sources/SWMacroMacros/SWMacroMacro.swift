@@ -13,6 +13,8 @@ struct SWMacroPlugin: CompilerPlugin {
         URLMacro.self,
         AssociatedObjectMacro.self,
         DictionaryStorageMacro.self,
-        CodingKeysMacro.self
+        DictionaryAccessorMacro.self,
+        CodeableMacro.self,
+        CodingKeyMacro.self,
     ]
 }

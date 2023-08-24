@@ -3,7 +3,6 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-
 internal enum MacroError: Swift.Error, CustomStringConvertible {
     case invalidInputType
     case message(String)
@@ -20,40 +19,26 @@ internal enum MacroError: Swift.Error, CustomStringConvertible {
 
 extension VariableDeclSyntax {
     var isStoredProperty: Bool {
-        guard let biding = bindings.first, bindings.count == 1, !isLazyProperty, !isConstant else {
+        guard let binding = bindings.first, bindings.count == 1, !isLazyProperty, !isConstant else {
             return false
         }
-
-        switch biding.accessor {
-        case .none:
-            return true
-        case .accessors(let node):
-            for accessor in node.accessors {
-                switch accessor.accessorKind.tokenKind {
-                case .keyword(.willSet), .keyword(.didSet):
-                    break
-                default:
-                    return false
-                }
-            }
-            return true
-        case .getter:
-            return false
-        }
+        guard let _ = binding.accessorBlock else { return true }
+        // TODO - Should Fix
+        return false
     }
 
     var isLazyProperty: Bool {
-        modifiers?.contains { $0.name.tokenKind == .keyword(Keyword.lazy) } ?? false
+        modifiers.contains { $0.name.tokenKind == .keyword(Keyword.lazy) } 
     }
 
     var isConstant: Bool {
-        bindingKeyword.tokenKind == .keyword(Keyword.let) && bindings.first?.initializer != nil
+        bindingSpecifier.tokenKind == .keyword(Keyword.let) && bindings.first?.initializer != nil
     }
 
     var getNameAndType: (name: String, type: String)? {
         guard let patternBinding = bindings.first?.as(PatternBindingSyntax.self) else { return nil }
         guard let name = patternBinding.pattern.as(IdentifierPatternSyntax.self)?.identifier,
-              let type = patternBinding.typeAnnotation?.as(TypeAnnotationSyntax.self)?.type.as(SimpleTypeIdentifierSyntax.self)?.name else {
+              let type = patternBinding.typeAnnotation?.as(TypeAnnotationSyntax.self)?.type.as(IdentifierTypeSyntax.self)?.name else {
             return nil
         }
         return (name: name.text, type: type.text)
@@ -79,7 +64,7 @@ extension AttributeListSyntax {
         self.first {
             $0.as(AttributeSyntax.self)?
                 .attributeName
-                .as(SimpleTypeIdentifierSyntax.self)?
+                .as(IdentifierTypeSyntax.self)?
                 .description == macroName
         }
     }
@@ -90,8 +75,8 @@ extension AttributeListSyntax.Element {
         if let argumentName {
             self
                 .as(AttributeSyntax.self)?
-                .argument?
-                .as(TupleExprElementListSyntax.self)?
+                .arguments?
+                .as(LabeledExprListSyntax.self)?
                 .first(where: {
                     $0.label?.text == argumentName
                 })?
@@ -99,8 +84,8 @@ extension AttributeListSyntax.Element {
         } else {
             self
                 .as(AttributeSyntax.self)?
-                .argument?
-                .as(TupleExprElementListSyntax.self)?
+                .arguments?
+                .as(LabeledExprListSyntax.self)?
                 .first?
                 .expression
         }

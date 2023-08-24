@@ -40,12 +40,17 @@ public macro AssociatedObject(_ policy: objc_AssociationPolicy) = #externalMacro
 
 /// Wrap up the stored properties of the given type in a dictionary,
 /// turning them into computed properties
-@attached(accessor)
 @attached(member, names: named(_storage))
 @attached(memberAttribute)
 public macro DictionaryStorage() = #externalMacro(module: "SWMacroMacros", type: "DictionaryStorageMacro")
 
+@attached(accessor)
+public macro DictionaryAccessor() = #externalMacro(module: "SWMacroMacros", type: "DictionaryAccessorMacro")
+
 /// CodingKeys
 @attached(member, names: named(CodingKeys))
-@attached(conformance)
-public macro CodingKeys(key: String? = nil) = #externalMacro(module: "SWMacroMacros", type: "CodingKeysMacro")
+@attached(extension, conformances: Codable)
+public macro Codable() = #externalMacro(module: "SWMacroMacros", type: "CodeableMacro")
+
+@attached(peer, names: arbitrary)
+public macro CodingKey(key: String) = #externalMacro(module: "SWMacroMacros", type: "CodingKeyMacro")

@@ -71,15 +71,15 @@ dictionaryStorage.x = 5
 print(dictionaryStorage._storage)
 
 
-@CodingKeys
-struct MyPerson {
+@Codable
+struct MyPerson: Codable {
     let id: String
-    @CodingKeys(key: "_age")
+    @CodingKey(key: "_age")
     let age: Int
     let use: MyUse
-    @CodingKeys
+    @Codable
     struct MyUse {
-        @CodingKeys(key: "_favorite")
+        @CodingKey(key: "_favorite")
         let favorite: String
     }
 }

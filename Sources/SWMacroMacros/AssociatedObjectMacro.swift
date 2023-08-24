@@ -15,11 +15,11 @@ extension AssociatedObjectMacro: PeerMacro {
         }
 
         let keyDecl = VariableDeclSyntax(
-            bindingKeyword: .identifier("fileprivate static var"),
+            bindingSpecifier: .identifier("fileprivate static var"),
             bindings: PatternBindingListSyntax {
                 PatternBindingSyntax(
                     pattern: IdentifierPatternSyntax(identifier: .identifier("__associated_\(identifier)Key")),
-                    typeAnnotation: .init(type: SimpleTypeIdentifierSyntax(name: .identifier("UInt8"))),
+                    typeAnnotation: .init(type: IdentifierTypeSyntax(name: .identifier("UInt8"))),
                     initializer: InitializerClauseSyntax(value: ExprSyntax(stringLiteral: "0"))
                 )
             }
@@ -44,11 +44,11 @@ extension AssociatedObjectMacro: AccessorMacro {
             throw MacroError.message("Specify a type explicitly")
         }
 
-        if binding.accessor != nil{
+        if binding.accessorBlock != nil{
             throw MacroError.message("`accessor should not be specified.")
         }
         
-        guard case let .argumentList(arguments) = node.argument,
+        guard case let .argumentList(arguments) = node.arguments,
               let firstElement = arguments.first?.expression,
               let policy = firstElement.as(MemberAccessExprSyntax.self) else {
             throw MacroError.message("`must be objc_AssociationPolicy specified.")

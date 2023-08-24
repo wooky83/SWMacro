@@ -23,7 +23,7 @@ public struct PublicMemberwiseInitMacro: MemberMacro {
         let initBody: ExprSyntax = "\(raw: initArguments.map { "self.\($0.name) = \($0.name)" }.joined(separator: "\n"))"
 
         let initDeclSyntax = try InitializerDeclSyntax(
-            PartialSyntaxNodeString(stringLiteral: "public init(\(initArguments.map { "\($0.name): \($0.type)" }.joined(separator: ", ")))"),
+            SyntaxNodeString(stringLiteral: "public init(\(initArguments.map { "\($0.name): \($0.type)" }.joined(separator: ", ")))"),
             bodyBuilder: {
                 initBody
             }

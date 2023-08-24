@@ -65,8 +65,10 @@ final class SWMacroTests: XCTestCase {
             class MySingleTone {
                 var variable1: Int?
                 var variable2: Int?
+
                 private init() {
                 }
+
                 static let shared = MySingleTone()
             }
             """,
@@ -88,8 +90,10 @@ final class SWMacroTests: XCTestCase {
             public struct MySingleTone {
                 var variable1: Int?
                 var variable2: Int?
+
                 private init() {
                 }
+
                 public static let shared = MySingleTone()
             }
             """#,
@@ -109,6 +113,7 @@ final class SWMacroTests: XCTestCase {
             
             class MemberWiseInit {
                 let intType: Int
+
                 public init(intType: Int) {
                     self.intType = intType
                 }
@@ -142,8 +147,7 @@ final class SWMacroTests: XCTestCase {
             }
             """#,
             expandedSource: #"""
-            class AssociatedClass {
-            }
+            class AssociatedClass { }
             extension AssociatedClass {
                 var intValue: Int {
                     get {
@@ -171,6 +175,7 @@ final class SWMacroTests: XCTestCase {
                       )
                     }
                 }
+            
                 fileprivate static var __associated_intValueKey: UInt8 = 0
                 var StringValue: String = "Hello World!!" {
                     get {
@@ -198,6 +203,7 @@ final class SWMacroTests: XCTestCase {
                       )
                     }
                 }
+
                 fileprivate static var __associated_StringValueKey: UInt8 = 0
             }
             """#,
@@ -251,20 +257,21 @@ final class SWMacroTests: XCTestCase {
                         _storage["z"] = newValue
                     }
                 }
-              var _storage: [String: Any] = ["x": 1, "y": "2", "z": true]
+
+                var _storage: [String: Any] = ["x": 1, "y": "2", "z": true]
             }
             """#,
-            macros: ["DictionaryStorage": DictionaryStorageMacro.self]
+            macros: ["DictionaryStorage": DictionaryStorageMacro.self, "DictionaryAccessor": DictionaryAccessorMacro.self]
         )
     }
 
     func testCodingKeysMacro() {
         assertMacroExpansion(
             #"""
-            @CodingKeys
+            @Codable
             struct Coding {
                 let id: String
-                @CodingKeys(key: "birth_day")
+                @CodingKey(key: "birth_day")
                 let birthDay: Int
             }
             """#,
@@ -272,15 +279,17 @@ final class SWMacroTests: XCTestCase {
             struct Coding {
                 let id: String
                 let birthDay: Int
+
                 enum CodingKeys: String, CodingKey {
                   case id
                   case birthDay = "birth_day"
                 }
             }
+            
             extension Coding: Codable {
             }
             """#,
-            macros: ["CodingKeys": CodingKeysMacro.self]
+            macros: ["Codable": CodeableMacro.self, "CodingKey": CodingKeyMacro.self]
         )
     }
 }

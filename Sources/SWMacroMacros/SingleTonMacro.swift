@@ -9,16 +9,15 @@ public struct SingleTonMacro: MemberMacro {
                                                                  in context: Context) throws -> [DeclSyntax] {
         let singleToneKeyword =
         if let clsDecl = declaration.as(ClassDeclSyntax.self) {
-            clsDecl.identifier
+            clsDecl.name
         } else if let strDecl = declaration.as(StructDeclSyntax.self) {
-            strDecl.identifier
+            strDecl.name
         } else {
             throw MacroError.invalidInputType
         }
 
         let publicACL: TokenSyntax =
-        if let modifiers = declaration.modifiers,
-           modifiers.map(\.name.tokenKind).contains(where: {
+        if declaration.modifiers.map(\.name.tokenKind).contains(where: {
                if case .keyword(.public) = $0 {
                    return true
                }
