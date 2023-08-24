@@ -1,6 +1,7 @@
-[![SWMacro SPM Build and Test](https://github.com/wooky83/SWMacro/actions/workflows/swift.yml/badge.svg)](https://github.com/wooky83/SWMacro/actions/workflows/swift.yml)
-[![Xcode 15.0](https://img.shields.io/badge/Xcode-15.0-147EFB?style=flat-square&logo=xcode&link=https%3A%2F%2Fdeveloper.apple.com%2Fxcode%2F)](https://developer.apple.com/xcode/)
 # Swift Macros :rocket:
+[![SWMacro SPM Build and Test](https://github.com/wooky83/SWMacro/actions/workflows/swift.yml/badge.svg)](https://github.com/wooky83/SWMacro/actions/workflows/swift.yml)
+![Swift 5.9](https://img.shields.io/badge/Swift-5.9-FA7343?logo=swift&style=flat-square)
+[![Xcode 15.0](https://img.shields.io/badge/Xcode-15.0-147EFB?style=flat-square&logo=xcode&link=https%3A%2F%2Fdeveloper.apple.com%2Fxcode%2F)](https://developer.apple.com/xcode/)
 
 ## Learning Resources :books:
 
