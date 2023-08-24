@@ -1,4 +1,5 @@
 [![SWMacro SPM Build and Test](https://github.com/wooky83/SWMacro/actions/workflows/swift.yml/badge.svg)](https://github.com/wooky83/SWMacro/actions/workflows/swift.yml)
+![Xcode 15.0](https://img.shields.io/badge/Xcode-15.0-147EFB?style=flat-square&logo=xcode&link=https%3A%2F%2Fdeveloper.apple.com%2Fxcode%2F)
 # Swift Macros :rocket:
 
 ## Learning Resources :books:
