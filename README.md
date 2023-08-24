@@ -205,10 +205,10 @@ struct MyPoint {
 ### CodingKeys
 * macro
 ```swift
-@CodingKeys
+@Codeable
 struct MyPerson {
     let id: String
-    @CodingKeys(key: "_age")
+    @CodingKey(key: "_age")
     let age: Int
 }
 ```
