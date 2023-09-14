@@ -20,10 +20,8 @@ jobs:
         with:
           xcode-version: '15.0-beta'
 
-      - name: Build SPM project
-        run: swift build
-      - name: Run Tests
-        run: swift test
-
+      - name: Build & Test SPM project
+        run: swift build && swift test
+        
       - name: Print Message
         run: echo "Wow GitHub Action!"
