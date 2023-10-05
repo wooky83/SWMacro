@@ -16,7 +16,7 @@ jobs:
        - name: Set up Xcode
          uses: maxim-lobanov/setup-xcode@v1
          with:
-           xcode-version: '15.0-beta'
+           xcode-version: '15.0'
        - name: Build SPM project
          run: swift build
        - name: Run Tests
