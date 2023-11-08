@@ -63,11 +63,11 @@ extension DictionaryAccessorMacro: AccessorMacro {
         }
 
         let dictionaryDefaultValue: ExprSyntax =
-        if binding.typeAnnotation?.as(TypeAnnotationSyntax.self)?.type.as(IdentifierTypeSyntax.self) != nil {
-            ", default: \(defaultValue)"
-        } else {
-            ""
-        }
+            if binding.typeAnnotation?.as(TypeAnnotationSyntax.self)?.type.as(IdentifierTypeSyntax.self) != nil {
+                ", default: \(defaultValue)"
+            } else {
+                ""
+            }
 
         return [
             """
