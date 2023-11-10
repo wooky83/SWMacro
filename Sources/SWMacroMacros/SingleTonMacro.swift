@@ -33,7 +33,12 @@ public struct SingleTonMacro: MemberMacro {
         \(publicACL)static let shared = \(raw: singleToneKeyword.text)()
         """
 
-        let initializer = try InitializerDeclSyntax("private init()") { }
-        return [DeclSyntax(initializer), sharedVariable]
+        var declSyntaxs: [DeclSyntax] = [sharedVariable]
+
+        if !declaration.hasInitFunction {
+            let initializer = try InitializerDeclSyntax("private init()") { }
+            declSyntaxs.insert(DeclSyntax(initializer), at: 0)
+        }
+        return declSyntaxs
     }
 }

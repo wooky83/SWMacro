@@ -57,6 +57,17 @@ extension DeclGroupSyntax {
             return variable
         }
     }
+
+    var hasInitFunction: Bool {
+        memberBlock
+            .members
+            .contains { member in
+                guard let function = member.decl.as(InitializerDeclSyntax.self) else {
+                    return false
+                }
+                return true
+            }
+    }
 }
 
 extension AttributeListSyntax {

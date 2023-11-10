@@ -101,6 +101,28 @@ final class SWMacroTests: XCTestCase {
         )
     }
 
+    func testPublicSingleTonInitMacro() {
+        assertMacroExpansion(
+            #"""
+            @SingleTon
+            public class MySingleTone {
+                private init() {
+                }
+            }
+            """#,
+            expandedSource: #"""
+
+            public class MySingleTone {
+                private init() {
+                }
+
+                public static let shared = MySingleTone()
+            }
+            """#,
+            macros: ["SingleTon": SingleTonMacro.self]
+        )
+    }
+
     func testPublicMemberwiseInitMacro() {
         assertMacroExpansion(
             """
