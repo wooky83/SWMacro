@@ -22,9 +22,23 @@ extension VariableDeclSyntax {
         guard let binding = bindings.first, bindings.count == 1, !isLazyProperty, !isConstant else {
             return false
         }
-        guard let _ = binding.accessorBlock else { return true }
-        // TODO - Should Fix
-        return false
+        switch binding.accessorBlock?.accessors {
+        case .accessors(let node):
+            for i in node {
+                switch i.accessorSpecifier {
+                case .keyword(.willSet), .keyword(.didSet):
+                    break
+                default:
+                    return false
+                }
+                return true
+            }
+            return true
+        case .getter:
+            return false
+        case .none:
+            return true
+        }
     }
 
     var isLazyProperty: Bool {
@@ -62,7 +76,7 @@ extension DeclGroupSyntax {
         memberBlock
             .members
             .contains { member in
-                guard let function = member.decl.as(InitializerDeclSyntax.self) else {
+                guard let _ = member.decl.as(InitializerDeclSyntax.self) else {
                     return false
                 }
                 return true
